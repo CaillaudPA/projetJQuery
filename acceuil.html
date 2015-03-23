@@ -11,6 +11,7 @@
 
 		<!-- Latest compiled JavaScript -->
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="script/acceuil.js"></script>
 	</head>
 	<body>
 
@@ -20,10 +21,21 @@
 			<div class="form-group">
 			  <label for="usr">Ville:</label>
 			  <input type="text" class="form-control" id="ville">
+
 			</div>
 		</div>
 
 		<div class="container" id="containerPhoto">
+
+			<script> $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?
+tags=nantes&tagmode=any&format=json&jsoncallback=?",
+        function(data){
+          $.each(data.items, function(i,item){
+            $("<img/>").attr("src", item.media.m).appendTo("#images");
+            if ( i == 6 ) return false;
+          });
+        });
+</script>
 
 		</div>
 
