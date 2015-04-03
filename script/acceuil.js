@@ -6,28 +6,28 @@ $(document).ready(function(){
 
 	$( "#ville" ).autocomplete({
 source: function(requete,reponse){
-    $.ajax({
-        url : "​http://annuaire.comarquage.fr/rest/autocomplete_territory.json?",
-        data : "term=nantes",
-        dataType : "json",
-        method : "GET",
-    success : function (json) {
-        Villes = [];
-            $.each(json, function(i,item){
-                //supprimer les doublons
-                if ($.inArray(item.Ville,Villes) == -1){
-                Villes.push(item.Ville);
-                //$('#submit').css({"visibility" :'visible'});
-                //$('#reset').css({"visibility" :'visible'});
-            }
-        });
-                reponse(Villes);
-            },
-                error : function (){
-                reponse(["rien"]);
-            }
-        });
-    }
+$.ajax({
+url : "http://infoweb/~jacquin-c/codePostalComplete.php",
+data : "maxRows=10&commune=" + requete.term,
+dataType : "json",
+method : "GET",
+success : function (json) {
+Villes = [];
+$.each(json, function(i,item){
+//supprimer les doublons
+if ($.inArray(item.Ville,Villes) == -1){
+Villes.push(item.Ville);
+//$('#submit').css({"visibility" :'visible'});
+//$('#reset').css({"visibility" :'visible'});
+}
+});
+reponse(Villes);
+},
+error : function (){
+reponse([]);
+}
+});
+}
 });
 	
 });
