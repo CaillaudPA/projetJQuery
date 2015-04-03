@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$("#ville").change(function(){
 		getPhoto();
 	});
+    
 
 
 
@@ -37,12 +38,13 @@ reponse([]);
 
 function getPhoto (){
 	$('#photo').empty();
+    $('#photo').removeClass('fotorama');
 
 	$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+ $('#ville').val() +"&tagmode=any&format=json&jsoncallback=?",
 	function(data){
 		$.each(data.items, function(i,item){
 			//$("<div id='divPhoto' class='col-xs-4 col-sm-3 col-md-2'></div>").appendTo("#rowPhoto");
-			$("<img />").attr("src", item.media.m).appendTo("#photo").wrap("<div></div>");
+			$("<img />").attr("src", item.media.m).appendTo("#photo");
             if(i==4){
                 return false;
             }
@@ -50,8 +52,7 @@ function getPhoto (){
 		});
 
 	});
-    $('#photo').slick();
-
+    $('#photo').fotorama();
 }
 
 
