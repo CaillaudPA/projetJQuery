@@ -12,6 +12,10 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="script/acceuil.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.ui/1.8.10/jquery-ui.js"></script>
+<link rel="Stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="style/acceuil.css"> 
 	</head>
 	<body>
 
@@ -19,26 +23,23 @@
 			<h1 class="text-center">Photos des villes de France</h1>
 			<p>Facile d'utilisation</p>
 			<div class="form-group">
+			
 			  <label for="usr">Ville:</label>
 			  <input type="text" class="form-control" id="ville">
 
-			</div>
-		</div>
+			 
+			
 
-		<div class="container" id="containerPhoto">
+			
 
-			<script> $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?
-tags=nantes&tagmode=any&format=json&jsoncallback=?",
-        function(data){
-          $.each(data.items, function(i,item){
-            $("<img/>").attr("src", item.media.m).appendTo("#images");
-            if ( i == 6 ) return false;
-          });
-        });
-</script>
+		</div></div>
+		<div class="container">
+			
+			<section class="row" id="rowPhoto">
+
+			</section>
 
 		</div>
-
 
 	</body>
 </html>
