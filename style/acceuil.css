@@ -1,11 +1,9 @@
-#tailleImg{
-	width: 250px;
-	height: 150px;
-	padding: 5px;
-
-}
-
-#rowPhoto{
-	margin: auto;
-	text-align: center;
+#owl-demo .item img{
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    max-height: 300px;
+    text-align: center;
+    margin: auto;
 }
