@@ -14,7 +14,6 @@ $(document).ready(function(){
         ville = $('#ville').val();
         var nombre = select.options[select.selectedIndex].text;
         imgs = getPhoto(ville,nombre);
-        window.alert(affichage);
         changerVue(imgs,affichage);
 
 	});
@@ -79,7 +78,6 @@ $(document).ready(function(){
                 //mise en place du dictionnaire ( autheur -> url)
                 var image = {"url" : item.media.m,"auteur" : item.author, "date" : item.date_taken };
                 images.push(image);
-                window.alert(images[i]);
                 if(nombre == i){
                     return false;
                 }
@@ -127,9 +125,9 @@ $(document).ready(function(){
                 $("#rowPhoto").append("<img src='"+dico[i].url+"' />");
             };
         }
-        
     }
 });
+
 
 
 
