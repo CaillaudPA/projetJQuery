@@ -3,13 +3,14 @@ $(document).ready(function(){
     ville = $('#ville').val();
     // de base la vue est en carousel
     var affichage ="liste";
-    var select = document.getElementById("nombre");
-    images = []
+    var select = $("#nombre");
+    var images = []
 
 	$("#ville").change(function(){
         // on rempli le dictionnaire
-        ville = $('#ville').val();
-        nombre = select.options[select.selectedIndex].text;
+        var ville = $('#ville').val();
+        //var nombre = select.options[select.selectedIndex].text;
+        var nombre = select.val();
         getPhoto(ville,nombre);
         changerVue(images,affichage);
 	});
@@ -19,16 +20,17 @@ $(document).ready(function(){
     });
 
     $("#sort").on("click",function(){
-        imagess = sortByAuthor(imgs);
+        images = sortByAuthor(imgs);
     });
 
     $("#list").on("click",function(){
         affichage = "liste";
+        changerVue(images, affichage);
     });
 
     $("#carousel").on("click",function(){
         affichage = "carousel";
-        window.alert(images);
+        changerVue(images, affichage);
     });
 
     $("img").on("click",function(){
@@ -66,7 +68,7 @@ $(document).ready(function(){
 
 
     function getPhoto (ville,nombre){
-
+        images = [];
         $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+ ville +"&tagmode=any&format=json&jsoncallback=?",
         function(data){
             
@@ -85,7 +87,7 @@ $(document).ready(function(){
 
     function sortByAuthor(dico){
 
-        newTab = [];
+        var newTab = [];
         newTab = dico.sort(compareAuthor);
         return newTab;
     }
@@ -105,20 +107,20 @@ $(document).ready(function(){
 
             var content = "";
 
-            for (var i = 0; i < dico.length - 1; i++) {
+            for (var i = 0; i < select.val(); i++) {
                 content += "<div class='item'> <img src='"+ dico[i].url +"' /></div>"; //;$("<img id='tailleImg'/>").attr("src", item.media.m).appendTo("#rowPhoto");
                 $('#owl-demo').html(content);
                 setTimeout(function(){$('#owl-demo').owlCarousel({navigation : true, // Show next and prev buttons
                 slideSpeed : 300,
                 paginationSpeed : 400,
-                singleItem:true});},2000);
+                singleItem:true});},100);
             };
         }
         else{
 
             $("#rowPhoto").empty();
 
-            for (var i = 0; i< dico.length - 1; i++) {
+            for (var i = 0; i< select.val(); i++) {
                 $("#rowPhoto").append("<img src='"+dico[i].url+"' />");
             };
         }
