@@ -1,29 +1,25 @@
-
-
-
 $(document).ready(function(){
    
     ville = $('#ville').val();
     // de base la vue est en carousel
     var affichage ="liste";
     var select = document.getElementById("nombre");
-    var imgs = [];
+    images = []
 
 	$("#ville").change(function(){
         // on rempli le dictionnaire
         ville = $('#ville').val();
-        var nombre = select.options[select.selectedIndex].text;
-        imgs = getPhoto(ville,nombre);
-        changerVue(imgs,affichage);
-
+        nombre = select.options[select.selectedIndex].text;
+        getPhoto(ville,nombre);
+        changerVue(images,affichage);
 	});
 
     $("#ok").on("click",function(){
-        changerVue(imgs,affichage);
+        changerVue(images,affichage);
     });
 
     $("#sort").on("click",function(){
-        imgs = sortByAuthor(imgs);
+        imagess = sortByAuthor(imgs);
     });
 
     $("#list").on("click",function(){
@@ -32,9 +28,10 @@ $(document).ready(function(){
 
     $("#carousel").on("click",function(){
         affichage = "carousel";
+        window.alert(images);
     });
 
-    $(".item > img").on("click",function(){
+    $("img").on("click",function(){
         window.alert("test");
     });
 
@@ -69,21 +66,21 @@ $(document).ready(function(){
 
 
     function getPhoto (ville,nombre){
-        var images=[];
 
         $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+ ville +"&tagmode=any&format=json&jsoncallback=?",
         function(data){
             
             $.each(data.items, function(i,item){
                 //mise en place du dictionnaire ( autheur -> url)
-                var image = {"url" : item.media.m,"auteur" : item.author, "date" : item.date_taken };
+                var image = {"url" : item.media.m,"auteur" : item.author, "date" : item.date_taken, "title" : item.title};
                 images.push(image);
+                //window.alert(images);
                 if(nombre == i){
                     return false;
                 }
             });
         });
-        return images;
+
     }
 
     function sortByAuthor(dico){
