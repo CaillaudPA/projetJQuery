@@ -20,7 +20,8 @@ $(document).ready(function(){
     });
 
     $("#sort").on("click",function(){
-        images = sortByAuthor(imgs);
+        images = sortByAuthor(images);
+        changerVue(images, affichage);
     });
 
     $("#list").on("click",function(){
@@ -86,7 +87,6 @@ $(document).ready(function(){
     }
 
     function sortByAuthor(dico){
-
         var newTab = [];
         newTab = dico.sort(compareAuthor);
         return newTab;
