@@ -9,13 +9,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 		
 		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 		<!-- Optional theme -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 
 		<!-- Latest compiled and minified JavaScript -->
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		
 		<link rel="stylesheet" href="owl/owl-carousel/owl.carousel.css">
 		<link rel="stylesheet" href="owl/owl-carousel/owl.theme.css">
@@ -32,17 +32,25 @@
 			<p>Facile d'utilisation</p>
 			<div class="form-group">
 			    <label for="usr">Ville:</label>
-			    <input type="text" class="form-control" id="ville">
+			    <input type="text" class="form-control" id="ville"></br>
+			    <input type="button" value="trier par Autheur" id="sort">
+			    <input type="button" value="vue carousel" id="carousel">
+			    <input type="button" value="vue liste" id="list">
+				nombre d'images : <SELECT id="nombre" size="1">
+					<OPTION>1
+					<OPTION>2
+					<OPTION>3
+					<OPTION>4
+					<OPTION>5
+					<OPTION selected>10
+					<OPTION>15
+					<OPTION>20
+				</SELECT>
+				<input type="button" value="valider" id="ok">
 			</div>
 		</div>
-			
 
-			  
-
-			
-
-		
-		<div class="container">	
+		<div class="container" id="contain">	
 		<section class="row" id="rowPhoto">
 			<div id="owl-demo" class="owl-carousel">
 				
