@@ -39,7 +39,13 @@ $(document).ready(function(){
 
     function loads(){
         $("body").find("img").on("click",function(){
-            clicks(images);
+            var indice = 0;
+             for(var i = 0 ; i < $('#nombre').val() ; i++){
+            if(images[i].url == $(this).attr("src")){
+                indice = i;
+            }
+        }
+            clicks(indice);
         });
     }
 
@@ -72,14 +78,10 @@ $(document).ready(function(){
             }
         });
 
-    function clicks(images){
-        var indice = 0;
-        for(var i = 0 ; i < $('#nombre').val() ; i++){
-            if(images[i].url == $(this).attr("src")){
-                indice = i;
-            }
-        }
-        $('.modal').append(images[i].titleImg +" <br/> "+ images[i].date +" <br/> " + images[i].auteur +" <br/> "+ images[i].url);
+    function clicks(indice){
+        
+        //alert(indice);
+        $('.modal').html(" <span class='modal_close'>&#215;</span>" + images[indice].titleImg +" <br/> "+ images[indice].date +" <br/> " + images[indice].auteur +" <br/> "+ images[indice].url);
         $('.modal').css('display', 'block');
         $('.modal_close').click(function(){
         $('.modal').css('display', 'none');
