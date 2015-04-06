@@ -13,31 +13,34 @@ $(document).ready(function(){
         //var nombre = select.options[select.selectedIndex].text;
         var nombre = select.val();
         getPhoto(ville);
-        changerVue(images,affichage);
+        loads();
 	});
 
-    $("#ok").on("click",function(){
-        changerVue(images,affichage);
-    });
 
     $("#sort").on("click",function(){
         images = sortByAuthor(images);
         changerVue(images, affichage);
+        loads();
     });
 
     $("#list").on("click",function(){
         affichage = "liste";
         changerVue(images, affichage);
+        loads();
     });
 
     $("#carousel").on("click",function(){
         affichage = "carousel";
         changerVue(images, affichage);
+        loads();
     });
 
-    $("img").on("click",function(){
-        window.alert("test");
-    });
+
+    function loads(){
+        $("body").find("img").on("click",function(){
+            clicks(images);
+        });
+    }
 
 
      // mise en place de l'autocomplete
@@ -68,71 +71,81 @@ $(document).ready(function(){
             }
         });*/
 
-
-
-function getPhoto (ville){
-    images = [];
-    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+ ville +"&tagmode=any&format=json&jsoncallback=?",
-    function(data){
-            
-    $.each(data.items, function(i,item){
-        //mise en place du dictionnaire ( autheur -> url)
-        var image = {url : item.media.m,"auteur" : item.author, "date" : item.date_taken, "titleImg" : item.title};
-        images.push(image);
-        //window.alert(images);
-        if(i == 20){
-            return false;
+    function clicks(images){
+        var indice = 0;
+        for(var i = 0 ; i < $('#nombre').val() ; i++){
+            if(images[i].url == $(this).attr("src")){
+                indice = i;
+            }
         }
-    }); 
-    });
-}
+        window.alert(images[i].titleImg +" | "+ images[i].date +" | " + images[i].auteur +" | "+ images[i].url);  
+    }
 
-function sortByAuthor(dico){
-    var newTab = [];
-    newTab = dico.sort(compareAuthor);
-    return newTab;
-}
 
-function compareAuthor(a,b) {
-    if (a.auteur < b.auteur)
-        return -1;
-    if (a.auteur > b.auteur)
-        return 1;
-    return 0;
-}
+    function getPhoto (ville){
+        images = [];
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+ ville +"&tagmode=any&format=json&jsoncallback=?",
+        function(data){
+                
+            $.each(data.items, function(i,item){
+                //mise en place du dictionnaire ( autheur -> url)
+                var image = {"url" : item.media.m,"auteur" : item.author, "date" : item.date_taken, "titleImg" : item.title};
+                images.push(image);
+                //window.alert(images);
+                if(i == 20){
+                    return false;
+                }
+            }); 
+        });
+    }
 
-   
+    function sortByAuthor(dico){
+        var newTab = [];
+        newTab = dico.sort(compareAuthor);
+        return newTab;
+    }
 
-function changerVue(dico,vue){
-    if(vue == "carousel"){
-        $("#rowPhoto").empty();
-        $("#rowPhoto").html('<div id="owl-demo" class="owl-carousel"></div>');
+    function compareAuthor(a,b) {
+        if (a.auteur < b.auteur)
+            return -1;
+        if (a.auteur > b.auteur)
+            return 1;
+        return 0;
+    }
 
-        var content = "";
+       
 
-            for (var i = 0; i < $('#nombre').val(); i++) {
-                content += "<div class='item'> <img src='"+ dico[i].url +"' /></div>"; //;$("<img id='tailleImg'/>").attr("src", item.media.m).appendTo("#rowPhoto");
-                $('#owl-demo').html(content);
-                setTimeout(function(){$('#owl-demo').owlCarousel({navigation : true, // Show next and prev buttons
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                singleItem:true});},100);
+    function changerVue(dico,vue){
+        if(vue == "carousel"){
+            $("#rowPhoto").empty();
+            $("#rowPhoto").html('<div id="owl-demo" class="owl-carousel"></div>');
+
+            var content = "";
+
+                for (var i = 0; i < $('#nombre').val(); i++) {
+                    content += "<div class='item'> <img class='imgListe' src='"+ dico[i].url +"' /></div>"; //;$("<img id='tailleImg'/>").attr("src", item.media.m).appendTo("#rowPhoto");
+                    $('#owl-demo').html(content);
+                    setTimeout(function(){$('#owl-demo').owlCarousel({navigation : true, // Show next and prev buttons
+                    slideSpeed : 300,
+                    paginationSpeed : 400,
+                    singleItem:true});},100);
+                };
+            }
+            else{
+
+            $("#rowPhoto").empty();
+            //$('#rowPhoto').html("<div class='row' id='row'></div>");
+
+            for (var i = 0; i< $('#nombre').val(); i++) {
+                var titre = dico[i].titleImg;
+                $("#rowPhoto").append("<div class='col-lg-3 col-md-4 col-sm-6 col-xs-12'><img class='imgListe' src='"+dico[i].url+"'/></div>");
             };
         }
-        else{
-
-        $("#rowPhoto").empty();
-        //$('#rowPhoto').html("<div class='row' id='row'></div>");
-
-        for (var i = 0; i< $('#nombre').val(); i++) {
-            var titre = dico[i].titleImg;
-            $("#rowPhoto").append("<div class='col-lg-3 col-md-4 col-sm-6 col-xs-12'><img id='imgListe' onclick='cl()' src='"+dico[i].url +"' alt='"+titre+"'/></div>");
-        };
     }
-}
 
 });
- function cl(){alert($(this).attr('alt'));}
+ 
+
 
 
 
