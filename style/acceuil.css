@@ -43,3 +43,7 @@
 .modal_close:hover{
     font-weight: bold;
 }
+
+img:hover{
+    cursor: pointer;
+}
