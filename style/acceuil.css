@@ -7,3 +7,15 @@
     text-align: center;
     margin: auto;
 }
+
+#contain{
+	padding-top: 10px;
+}
+
+#imgListe{
+	width: 250px;
+	height: 200px;
+	padding: 10px;
+	text-align: center;
+	margin: auto;
+}

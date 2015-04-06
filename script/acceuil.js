@@ -6,12 +6,13 @@ $(document).ready(function(){
     var select = $("#nombre");
     var images = []
 
+
 	$("#ville").change(function(){
         // on rempli le dictionnaire
         var ville = $('#ville').val();
         //var nombre = select.options[select.selectedIndex].text;
         var nombre = select.val();
-        getPhoto(ville,nombre);
+        getPhoto(ville);
         changerVue(images,affichage);
 	});
 
@@ -68,46 +69,48 @@ $(document).ready(function(){
         });*/
 
 
-    function getPhoto (ville,nombre){
-        images = [];
-        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+ ville +"&tagmode=any&format=json&jsoncallback=?",
-        function(data){
+
+function getPhoto (ville){
+    images = [];
+    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags="+ ville +"&tagmode=any&format=json&jsoncallback=?",
+    function(data){
             
-            $.each(data.items, function(i,item){
-                //mise en place du dictionnaire ( autheur -> url)
-                var image = {"url" : item.media.m,"auteur" : item.author, "date" : item.date_taken, "title" : item.title};
-                images.push(image);
-                //window.alert(images);
-                if(nombre == i){
-                    return false;
-                }
-            });
-        });
+    $.each(data.items, function(i,item){
+        //mise en place du dictionnaire ( autheur -> url)
+        var image = {url : item.media.m,"auteur" : item.author, "date" : item.date_taken, "titleImg" : item.title};
+        images.push(image);
+        //window.alert(images);
+        if(i == 20){
+            return false;
+        }
+    }); 
+    });
+}
 
-    }
+function sortByAuthor(dico){
+    var newTab = [];
+    newTab = dico.sort(compareAuthor);
+    return newTab;
+}
 
-    function sortByAuthor(dico){
-        var newTab = [];
-        newTab = dico.sort(compareAuthor);
-        return newTab;
-    }
+function compareAuthor(a,b) {
+    if (a.auteur < b.auteur)
+        return -1;
+    if (a.auteur > b.auteur)
+        return 1;
+    return 0;
+}
 
-    function compareAuthor(a,b) {
-        if (a.auteur < b.auteur)
-            return -1;
-        if (a.auteur > b.auteur)
-            return 1;
-        return 0;
-    }
+   
 
-    function changerVue(dico,vue){
-        if(vue == "carousel"){
-            $("#rowPhoto").empty();
-            $("#rowPhoto").html('<div id="owl-demo" class="owl-carousel"></div>');
+function changerVue(dico,vue){
+    if(vue == "carousel"){
+        $("#rowPhoto").empty();
+        $("#rowPhoto").html('<div id="owl-demo" class="owl-carousel"></div>');
 
-            var content = "";
+        var content = "";
 
-            for (var i = 0; i < select.val(); i++) {
+            for (var i = 0; i < $('#nombre').val(); i++) {
                 content += "<div class='item'> <img src='"+ dico[i].url +"' /></div>"; //;$("<img id='tailleImg'/>").attr("src", item.media.m).appendTo("#rowPhoto");
                 $('#owl-demo').html(content);
                 setTimeout(function(){$('#owl-demo').owlCarousel({navigation : true, // Show next and prev buttons
@@ -118,14 +121,18 @@ $(document).ready(function(){
         }
         else{
 
-            $("#rowPhoto").empty();
+        $("#rowPhoto").empty();
+        //$('#rowPhoto').html("<div class='row' id='row'></div>");
 
-            for (var i = 0; i< select.val(); i++) {
-                $("#rowPhoto").append("<img src='"+dico[i].url+"' />");
-            };
-        }
+        for (var i = 0; i< $('#nombre').val(); i++) {
+            var titre = dico[i].titleImg;
+            $("#rowPhoto").append("<div class='col-lg-3 col-md-4 col-sm-6 col-xs-12'><img id='imgListe' onclick='cl()' src='"+dico[i].url +"' alt='"+titre+"'/></div>");
+        };
     }
+}
+
 });
+ function cl(){alert($(this).attr('alt'));}
 
 
 
