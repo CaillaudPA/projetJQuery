@@ -24,6 +24,7 @@ $(document).ready(function(){
     });
 
     $("#list").on("click",function(){
+
         affichage = "liste";
         changerVue(images, affichage);
         loads();
@@ -44,7 +45,7 @@ $(document).ready(function(){
 
 
      // mise en place de l'autocomplete
-        /*$( "#ville" ).autocomplete({
+        $( "#ville" ).autocomplete({
             source: function(requete,reponse){
                 $.ajax({
                     url : "http://infoweb/~jacquin-c/codePostalComplete.php",
@@ -69,7 +70,7 @@ $(document).ready(function(){
                         }
                 });
             }
-        });*/
+        });
 
     function clicks(images){
         var indice = 0;
@@ -78,7 +79,12 @@ $(document).ready(function(){
                 indice = i;
             }
         }
-        window.alert(images[i].titleImg +" | "+ images[i].date +" | " + images[i].auteur +" | "+ images[i].url);  
+        $('.modal').append(images[i].titleImg +" <br/> "+ images[i].date +" <br/> " + images[i].auteur +" <br/> "+ images[i].url);
+        $('.modal').css('display', 'block');
+        $('.modal_close').click(function(){
+        $('.modal').css('display', 'none');
+         });
+        //window.alert(images[i].titleImg +"  "+ images[i].date +" | " + images[i].auteur +" | "+ images[i].url);  
     }
 
 
@@ -138,7 +144,7 @@ $(document).ready(function(){
 
             for (var i = 0; i< $('#nombre').val(); i++) {
                 var titre = dico[i].titleImg;
-                $("#rowPhoto").append("<div class='col-lg-3 col-md-4 col-sm-6 col-xs-12'><img class='imgListe' src='"+dico[i].url+"'/></div>");
+                $("#rowPhoto").append("<div class='col-lg-3 col-md-4 col-sm-6 col-xs-12'><img id='imgListe' src='"+dico[i].url+"'/></div>");
             };
         }
     }
